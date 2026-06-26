@@ -25,8 +25,8 @@ def draw_circle(cx, cy, r, filled=True):
 def draw_face():
     """Draws the yellow face, black eyes, and a smile."""
     # Main Face (Yellow)
-    glColor3f(1.0, 1.0, 0.0)
-    draw_circle(0.5, 0.5, 0.3)
+    glColor3f(1.0, 1.0, 0.0)   
+    draw_circle(0.5, 0.5, 0.3)   ##cx, cy, r
     
     # Left and Right Eyes (Black)
     glColor3f(0.0, 0.0, 0.0)
@@ -35,27 +35,46 @@ def draw_face():
     
     # Smile (Black arc using line strip)
     glColor3f(0.0, 0.0, 0.0)
-    glLineWidth(4.0)
+    glLineWidth(4.0)  #For increasing thickness
     glBegin(GL_LINE_STRIP)
     # Ranging from 180 to 360 degrees draws the bottom half of a circle
     for i in range(180, 361):
         theta = i * math.pi / 180.0
         x = 0.15 * math.cos(theta)
         y = 0.15 * math.sin(theta)
-        glVertex2f(x + 0.5, y + 0.5)
+        glVertex2f(x + 0.5, y + 0.5)  # Change the arc position x + (right/left) y + (up/down)
     glEnd()
 
 def draw_tears():
     """Draws all active tear particles as small blue lines."""
     glColor3f(0.0, 0.7, 1.0)  # Light blue
-    glLineWidth(2.0)
+    glLineWidth(2.0)  # thickness of the tears
     glBegin(GL_LINES)
     for tear in tears:
         glVertex2f(tear['x'], tear['y'])
         # Draw a small trailing line upwards to simulate a falling drop
         glVertex2f(tear['x'], tear['y'] + 0.03)  
     glEnd()
+# def draw_tears():
+#     glColor3f(0.0, 0.7, 1.0)
 
+#     for tear in tears:
+#         x = tear['x']
+#         y = tear['y']
+
+#         glBegin(GL_POLYGON)
+
+#         # top round part
+#         for i in range(0, 181):
+#             theta = math.radians(i)
+#             px = 0.01 * math.cos(theta)
+#             py = 0.015 * math.sin(theta)
+#             glVertex2f(x + px, y + py)
+
+#         # bottom pointed part
+#         glVertex2f(x, y - 0.02)
+
+#         glEnd()
 def display():
     glClear(GL_COLOR_BUFFER_BIT)
     
